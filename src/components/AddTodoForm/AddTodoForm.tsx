@@ -1,7 +1,6 @@
 import { FormEvent, useState } from 'react';
-import { Nullable } from '../../domain/Nullable';
-import { Todo } from '../../domain/Todo';
 import { User } from '../../domain/User';
+import { Todo } from '../../domain/Todo';
 
 type AddTodoFormProps = {
   users: User[];
@@ -10,31 +9,23 @@ type AddTodoFormProps = {
 
 export const AddTodoForm = ({ users, onSubmit }: AddTodoFormProps) => {
   const [title, setTitle] = useState('');
-  const [titleError, setTitleError] = useState<Nullable<string>>(null);
+  const [titleError, setTitleError] = useState<string | null>(null);
 
   const [ownerId, setOwnerId] = useState<number>(0);
-  const [ownerErrorId, setOwnerErrorId] = useState<Nullable<string>>(null);
+  const [ownerError, setOwnerError] = useState<string | null>(null);
 
   const handleResetForm = () => {
     setTitle('');
     setTitleError(null);
     setOwnerId(0);
-    setOwnerErrorId(null);
-  };
-
-  const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (titleError) {
-      setTitleError(null);
-    }
-
-    setTitle(event.target.value.trimStart());
+    setOwnerError(null);
   };
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     setTitleError(null);
-    setOwnerErrorId(null);
+    setOwnerError(null);
 
     const normalizedTitle = title.trim();
     let hasError = false;
@@ -45,7 +36,7 @@ export const AddTodoForm = ({ users, onSubmit }: AddTodoFormProps) => {
     }
 
     if (ownerId === 0) {
-      setOwnerErrorId('Please choose a user');
+      setOwnerError('Please choose a user');
       hasError = true;
     }
 
@@ -66,28 +57,31 @@ export const AddTodoForm = ({ users, onSubmit }: AddTodoFormProps) => {
   return (
     <form onSubmit={handleSubmit}>
       <div className="field">
+        <label htmlFor="todo-title">Todo title:</label>
         <input
+          id="todo-title"
           type="text"
           data-cy="titleInput"
           placeholder="Enter a title"
           value={title}
-          onChange={handleTitleChange}
+          onChange={e => {
+            if (titleError) setTitleError(null);
+            setTitle(e.target.value.trimStart());
+          }}
         />
         {titleError && <span className="error">{titleError}</span>}
       </div>
 
       <div className="field">
+        <label htmlFor="user-select">User:</label>
         <select
+          id="user-select"
           data-cy="userSelect"
           value={ownerId}
-          onChange={event => {
-            const newOwnerId = +event.target.value;
-
-            if (ownerErrorId && newOwnerId !== 0) {
-              setOwnerErrorId(null);
-            }
-
-            setOwnerId(newOwnerId);
+          onChange={e => {
+            const newId = +e.target.value;
+            if (ownerError && newId !== 0) setOwnerError(null);
+            setOwnerId(newId);
           }}
         >
           <option value="0">Choose a user</option>
@@ -97,8 +91,7 @@ export const AddTodoForm = ({ users, onSubmit }: AddTodoFormProps) => {
             </option>
           ))}
         </select>
-
-        {ownerErrorId && <span className="error">{ownerErrorId}</span>}
+        {ownerError && <span className="error">{ownerError}</span>}
       </div>
 
       <button type="submit" data-cy="submitButton">
