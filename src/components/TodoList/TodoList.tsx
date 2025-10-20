@@ -7,18 +7,11 @@ type TodoListProps = {
 export const TodoList = ({ todos }: TodoListProps) => (
   <ul data-cy="todoList">
     {todos.map(todo => (
-      <li
-        key={todo.id}
-        className="TodoInfo"
-        data-id={todo.id}
-      >
+      <li key={todo.id} className="TodoInfo" data-id={todo.id}>
         <p className="TodoInfo__title">{todo.title}</p>
 
         {todo.user ? (
-          <a
-            href={`mailto:${todo.user.email}`}
-            className="UserInfo"
-          >
+          <a href={`mailto:${todo.user.email}`} className="UserInfo">
             {todo.user.name}
           </a>
         ) : (

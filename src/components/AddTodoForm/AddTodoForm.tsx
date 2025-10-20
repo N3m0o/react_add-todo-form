@@ -65,7 +65,10 @@ export const AddTodoForm = ({ users, onSubmit }: AddTodoFormProps) => {
           placeholder="Enter a title"
           value={title}
           onChange={e => {
-            if (titleError) setTitleError(null);
+            if (titleError) {
+              setTitleError(null);
+            }
+
             setTitle(e.target.value.trimStart());
           }}
         />
@@ -80,7 +83,11 @@ export const AddTodoForm = ({ users, onSubmit }: AddTodoFormProps) => {
           value={ownerId}
           onChange={e => {
             const newId = +e.target.value;
-            if (ownerError && newId !== 0) setOwnerError(null);
+
+            if (ownerError && newId !== 0) {
+              setOwnerError(null);
+            }
+
             setOwnerId(newId);
           }}
         >
