@@ -1,6 +1,6 @@
-import { User } from "../domain/User";
+import { User } from '../domain/User';
 
-const users: User [] = [
+const users: User[] = [
   {
     id: 1,
     name: 'Leanne Graham',

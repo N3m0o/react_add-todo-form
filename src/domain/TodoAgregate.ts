@@ -6,7 +6,10 @@ export type TodoAggregate = Todo & {
   user: Nullable<User>;
 };
 
-export const createTodoAggregates = (todos: Todo [], users: User[]): TodoAggregate[] => {
+export const createTodoAggregates = (
+  todos: Todo[],
+  users: User[],
+): TodoAggregate[] => {
   return todos.map(todo => {
     const user = users.find(({ id }) => id === todo.userId) ?? null;
 

@@ -1,17 +1,16 @@
-import { TodoAggregate } from "../../domain/TodoAgregate";
-import { TodoInfo } from "../TodoInfo";
+import { TodoAggregate } from '../../domain/TodoAgregate';
+import { TodoInfo } from '../TodoInfo';
 
 type TodoListProps = {
-  todos: TodoAggregate[]
-}
+  todos: TodoAggregate[];
+};
 
-export const TodoList = ({todos} : TodoListProps) => {
+export const TodoList = ({ todos }: TodoListProps) => {
   return (
     <section className="TodoList">
       {todos.map(todo => (
-        <TodoInfo key={todo.id} todo={todo}/>
+        <TodoInfo key={todo.id} todo={todo} />
       ))}
     </section>
   );
 };
-

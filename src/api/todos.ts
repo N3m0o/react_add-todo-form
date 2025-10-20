@@ -1,6 +1,6 @@
-import { Todo } from "../domain/Todo";
+import { Todo } from '../domain/Todo';
 
-const todos: Todo [] = [
+const todos: Todo[] = [
   {
     id: 1,
     title: 'delectus aut autem',

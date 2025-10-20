@@ -1,14 +1,14 @@
 import { FormEvent, useState } from 'react';
 import { Nullable } from '../../domain/Nullable';
-import users from '../../api/users';
-import todos from '../../api/todos';
 import { Todo } from '../../domain/Todo';
+import { User } from '../../domain/User';
 
 type AddTodoFormProps = {
-  onSubmit: (todo: Todo) => void;
+  users: User[];
+  onSubmit: (todo: Omit<Todo, 'id' | 'user'>) => void;
 };
 
-export const AddTodoForm = ({ onSubmit }: AddTodoFormProps) => {
+export const AddTodoForm = ({ users, onSubmit }: AddTodoFormProps) => {
   const [title, setTitle] = useState('');
   const [titleError, setTitleError] = useState<Nullable<string>>(null);
 
@@ -26,6 +26,7 @@ export const AddTodoForm = ({ onSubmit }: AddTodoFormProps) => {
     if (titleError) {
       setTitleError(null);
     }
+
     setTitle(event.target.value.trimStart());
   };
 
@@ -52,10 +53,7 @@ export const AddTodoForm = ({ onSubmit }: AddTodoFormProps) => {
       return;
     }
 
-    const maxId = Math.max(...todos.map(todo => todo.id), 0);
-
-    const newTodo: Todo = {
-      id: maxId + 1,
+    const newTodo = {
       title: normalizedTitle,
       completed: false,
       userId: ownerId,
