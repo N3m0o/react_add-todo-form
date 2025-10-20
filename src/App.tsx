@@ -16,7 +16,6 @@ export const App = () => {
     const user = usersFromServer.find(u => u.id === newTodoData.userId);
 
     if (!user) {
-      console.error('User not found for id:', newTodoData.userId);
       return;
     }
 
@@ -34,7 +33,7 @@ export const App = () => {
   return (
     <div className="App">
       <h1>Add todo form</h1>
-      
+
       <AddTodoForm users={usersFromServer} onSubmit={handleAddTodo} />
 
       <TodoList todos={aggregatedTodos} />
