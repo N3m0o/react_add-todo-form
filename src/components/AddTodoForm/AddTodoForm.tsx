@@ -21,7 +21,6 @@ export const AddTodoForm = ({ users, onSubmit }: AddTodoFormProps) => {
     setOwnerError(null);
   };
 
-
   const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (titleError) {
       setTitleError(null);
@@ -29,7 +28,6 @@ export const AddTodoForm = ({ users, onSubmit }: AddTodoFormProps) => {
 
     setTitle(e.target.value.trimStart());
   };
-
 
   const handleOwnerChange = (e: ChangeEvent<HTMLSelectElement>) => {
     const newId = +e.target.value;
@@ -84,7 +82,7 @@ export const AddTodoForm = ({ users, onSubmit }: AddTodoFormProps) => {
           data-cy="titleInput"
           placeholder="Enter a title"
           value={title}
-          onChange={handleTitleChange} 
+          onChange={handleTitleChange}
         />
         {titleError && <span className="error">{titleError}</span>}
       </div>
@@ -95,7 +93,7 @@ export const AddTodoForm = ({ users, onSubmit }: AddTodoFormProps) => {
           id="user-select"
           data-cy="userSelect"
           value={ownerId}
-          onChange={handleOwnerChange} 
+          onChange={handleOwnerChange}
         >
           <option value="0">Choose a user</option>
           {users.map(user => (
