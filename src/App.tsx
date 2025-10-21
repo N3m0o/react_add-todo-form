@@ -14,7 +14,7 @@ export const App = () => {
 
   const handleAddTodo = (newTodoData: Omit<Todo, 'id' | 'user'>) => {
     const maxId = Math.max(...todos.map(todo => todo.id), 0);
-    const user = usersFromServer.find(u => u.id === newTodoData.userId);
+    const user = usersFromServer.find(user => user.id === newTodoData.userId);
 
     if (!user) {
       return;

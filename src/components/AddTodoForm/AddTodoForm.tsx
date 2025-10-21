@@ -1,4 +1,4 @@
-import { FormEvent, useState } from 'react';
+import { FormEvent, useState, ChangeEvent } from 'react';
 import { User } from '../../domain/User';
 import { Todo } from '../../domain/Todo';
 
@@ -19,6 +19,26 @@ export const AddTodoForm = ({ users, onSubmit }: AddTodoFormProps) => {
     setTitleError(null);
     setOwnerId(0);
     setOwnerError(null);
+  };
+
+
+  const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (titleError) {
+      setTitleError(null);
+    }
+
+    setTitle(e.target.value.trimStart());
+  };
+
+
+  const handleOwnerChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    const newId = +e.target.value;
+
+    if (ownerError && newId !== 0) {
+      setOwnerError(null);
+    }
+
+    setOwnerId(newId);
   };
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -64,13 +84,7 @@ export const AddTodoForm = ({ users, onSubmit }: AddTodoFormProps) => {
           data-cy="titleInput"
           placeholder="Enter a title"
           value={title}
-          onChange={e => {
-            if (titleError) {
-              setTitleError(null);
-            }
-
-            setTitle(e.target.value.trimStart());
-          }}
+          onChange={handleTitleChange} 
         />
         {titleError && <span className="error">{titleError}</span>}
       </div>
@@ -81,15 +95,7 @@ export const AddTodoForm = ({ users, onSubmit }: AddTodoFormProps) => {
           id="user-select"
           data-cy="userSelect"
           value={ownerId}
-          onChange={e => {
-            const newId = +e.target.value;
-
-            if (ownerError && newId !== 0) {
-              setOwnerError(null);
-            }
-
-            setOwnerId(newId);
-          }}
+          onChange={handleOwnerChange} 
         >
           <option value="0">Choose a user</option>
           {users.map(user => (
